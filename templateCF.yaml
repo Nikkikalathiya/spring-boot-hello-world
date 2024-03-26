@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  MyInstance: 
+    Type: AWS::EC2::Instance
+    Properties:
+       ImageId: ami-0d7a109bf30624c99
+       InstanceType: t2.micro
+       KeyName: first-key
+       AvailabilityZone: us-east-1a
+       SecurityGroupIds: 
+       - !Ref InstanceSecurityGroup
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow http to client host
+      VpcId: vpc-0769a6e298d1bea19
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
